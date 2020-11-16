@@ -356,7 +356,7 @@ if (typeof jQuery === 'undefined') {
         var e = $.Event('hide.bs.' + this.type);
 
         function complete() {
-            if (that.hoverState != 'in') $tip.detach();
+            if (that.hoverState != 'in') $tip.unmount();
             that.$element.removeAttr('aria-describedby').trigger('hidden.bs.' + that.type);
             callback && callback();
         }
@@ -516,7 +516,7 @@ if (typeof jQuery === 'undefined') {
         this.hide(function () {
             that.$element.off('.' + that.type).removeData('bs.' + that.type);
             if (that.$tip) {
-                that.$tip.detach();
+                that.$tip.unmount();
             }
             that.$tip = null;
             that.$arrow = null;

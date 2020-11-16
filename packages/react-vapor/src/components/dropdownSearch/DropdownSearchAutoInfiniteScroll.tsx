@@ -24,7 +24,7 @@ export class DropdownSearchAutoInfiniteScroll extends React.Component<
     IDropdownSearchAutoInfiniteScrollState
 > {
     constructor(props: IDropdownSearchAutoInfiniteScrollProps, state: IDropdownSearchAutoInfiniteScrollState) {
-        super(props, state);
+        super(props);
         this.state = {
             activeOptions: props.options.slice(0, props.optionsPerPage),
         };

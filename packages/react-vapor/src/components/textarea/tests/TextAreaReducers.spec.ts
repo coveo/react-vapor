@@ -54,7 +54,7 @@ describe('Reducers', () => {
                 const newState = textAreasReducer(oldState, action);
                 const newTextArea: ITextAreaState = getNewTextArea(newState, action)[0];
 
-                expect(newTextArea).toEqual(jasmine.objectContaining(action.payload));
+                expect(newTextArea).toEqual(expect.objectContaining(action.payload));
             });
 
             it('should return a textArea with the value in the payload if passed', () => {

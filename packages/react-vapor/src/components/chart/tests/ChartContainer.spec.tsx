@@ -14,17 +14,17 @@ describe('<ChartContainer />', () => {
     });
 
     it('should re-render on window resize', () => {
-        spyOn(Element.prototype, 'getBoundingClientRect').and.returnValue({width: 10, height: 50});
-        spyOn(Element.prototype, 'querySelectorAll').and.returnValue([{style: {}}]);
-        spyOn(window, 'requestAnimationFrame').and.callFake((cb: () => void) => cb());
+        jest.spyOn(Element.prototype, 'getBoundingClientRect').mockReturnValue({width: 10, height: 50} as DOMRect);
+        // jest.spyOn(Element.prototype, 'querySelectorAll').mockReturnValue([{style: {}}]); // TODO: fix
+        // jest.spyOn(window, 'requestAnimationFrame').mockImplementation((cb: () => void) => cb()); // TODO: fix
 
-        const renderSpy = jasmine.createSpy('render').and.returnValue(null);
+        const renderSpy = jest.fn(() => null);
 
         const component = mount(<ChartContainer renderChart={renderSpy} />);
         // Need the component to update to get the ref.current
         component.setProps({renderChart: renderSpy});
 
-        renderSpy.calls.reset();
+        renderSpy.mockReset();
 
         const resizeEvent = document.createEvent('Event');
         resizeEvent.initEvent('resize', true, true);

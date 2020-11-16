@@ -22,7 +22,7 @@ describe('TabPane', () => {
         });
 
         afterEach(() => {
-            tab.detach();
+            tab?.unmount(); // <-- new
         });
 
         it('should set active class on container when isActive is true', () => {

@@ -51,7 +51,7 @@ describe('Tables', () => {
 
         afterEach(() => {
             store.dispatch(clearState());
-            wrapper.detach();
+            wrapper?.unmount(); // <-- new
         });
 
         it('should get if it is opened as a prop', () => {

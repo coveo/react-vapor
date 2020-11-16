@@ -1,5 +1,5 @@
 import {shallow} from 'enzyme';
-import React from 'react';
+import * as React from 'react';
 
 import {LineSeries} from '../LineSeries';
 import {XYChartContextMock} from './XYChartContextMock';
@@ -19,7 +19,7 @@ describe('<LineSeries />', () => {
     });
 
     it('should render a path for every serie', () => {
-        spyOn(React, 'useContext').and.returnValue(XYChartContextMock);
+        jest.spyOn(React, 'useContext').mockReturnValue(XYChartContextMock);
 
         const {series} = XYChartContextMock;
         const component = shallow(<LineSeries />);

@@ -1,5 +1,5 @@
 import {shallow} from 'enzyme';
-import React from 'react';
+import * as React from 'react';
 
 import {XGrid} from '../XGrid';
 import {XYChartContextMock} from './XYChartContextMock';
@@ -14,7 +14,7 @@ describe('<XGrid />', () => {
     });
 
     it('should not throw with a custom context', () => {
-        spyOn(React, 'useContext').and.returnValue(XYChartContextMock);
+        jest.spyOn(React, 'useContext').mockReturnValue(XYChartContextMock);
 
         expect(() => {
             shallow(<XGrid />);
@@ -24,7 +24,7 @@ describe('<XGrid />', () => {
     });
 
     it('should render a line', () => {
-        spyOn(React, 'useContext').and.returnValue(XYChartContextMock);
+        jest.spyOn(React, 'useContext').mockReturnValue(XYChartContextMock);
 
         const component = shallow(<XGrid />);
 

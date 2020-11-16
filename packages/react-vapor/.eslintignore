@@ -3,3 +3,4 @@ dist/*
 coverage/*
 **/*.scss.d.ts
 *.js
+setupTests.js

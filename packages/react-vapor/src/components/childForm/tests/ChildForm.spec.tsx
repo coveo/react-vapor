@@ -24,7 +24,7 @@ describe('ChildForm', () => {
         });
 
         afterEach(() => {
-            childForm.detach();
+            childForm?.unmount(); // <-- new
         });
 
         it('should disable children when disabled property is true', () => {

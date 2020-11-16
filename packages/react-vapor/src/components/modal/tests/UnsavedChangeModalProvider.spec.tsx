@@ -9,17 +9,17 @@ import {UnsavedChangesModalProvider} from '../UnsavedChangeModalProvider';
 describe('<UnsavedChangeModalProvider/>', () => {
     let unsavedChangesModalProvider: ShallowWrapper;
     let heavyUnsavedChangesModalProvider;
-    let regularClickActionSpy: jasmine.Spy;
-    let promptBeforeClickActionSpy: jasmine.Spy;
+    let regularClickActionSpy: jest.Mock<any, any>;
+    let promptBeforeClickActionSpy: jest.Mock<any, any>;
     const store = getStoreMock();
     beforeEach(() => {
-        regularClickActionSpy = jasmine.createSpy('🥔');
-        promptBeforeClickActionSpy = jasmine.createSpy('🍟');
+        regularClickActionSpy = jest.fn();
+        promptBeforeClickActionSpy = jest.fn();
     });
 
     afterEach(() => {
-        regularClickActionSpy.calls.reset();
-        promptBeforeClickActionSpy.calls.reset();
+        regularClickActionSpy.mockReset();
+        promptBeforeClickActionSpy.mockReset();
         if (unsavedChangesModalProvider?.exists()) {
             unsavedChangesModalProvider.unmount();
         }

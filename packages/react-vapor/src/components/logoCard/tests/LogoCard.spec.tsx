@@ -36,7 +36,7 @@ describe('LogoCard', () => {
 
         beforeAll(() => {
             defaultLogoCardProps = {
-                onClick: jasmine.createSpy('onClick'),
+                onClick: jest.fn(),
                 title: 'some logocard title',
             };
         });
@@ -88,7 +88,7 @@ describe('LogoCard', () => {
         beforeAll(() => {
             disabledLogoCardProps = {
                 disabled: true,
-                onClick: jasmine.createSpy('onClick'),
+                onClick: jest.fn(),
                 ribbon: {
                     label: 'ribbonWhenEnabled',
                 },

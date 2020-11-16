@@ -21,7 +21,7 @@ describe('<RadioSelect />', () => {
 
     describe('once mounted', () => {
         let radioSelect: ShallowWrapper<IRadioSelectAllProps>;
-        let spy: jasmine.Spy;
+        let spy: jest.Mock<any, any>;
 
         const firstRadioValue = 'blue';
         const secondRadioValue = 'red';
@@ -29,7 +29,7 @@ describe('<RadioSelect />', () => {
 
         const shallowRadioSelect = (props: IRadioSelectAllProps = {}) => {
             // eslint-disable-next-line jasmine/no-unsafe-spy
-            spy = jasmine.createSpy('onClick');
+            spy = jest.fn();
             radioSelect = shallow(
                 <RadioSelect {...props}>
                     <Radio id="radio1" value={firstRadioValue} onClick={spy} />
@@ -39,7 +39,7 @@ describe('<RadioSelect />', () => {
         };
 
         it('should call onMount on mount', () => {
-            const spyOnMount = jasmine.createSpy('onMount');
+            const spyOnMount = jest.fn();
             shallowRadioSelect({
                 onMount: spyOnMount,
             });
@@ -48,7 +48,7 @@ describe('<RadioSelect />', () => {
         });
 
         it('should call onUnmount on unmount', () => {
-            const spyOnUnmount = jasmine.createSpy('onUnmount');
+            const spyOnUnmount = jest.fn();
             shallowRadioSelect({
                 onUnmount: spyOnUnmount,
             });
@@ -123,7 +123,7 @@ describe('<RadioSelect />', () => {
         });
 
         it('should call onChange prop when the child call onClick', () => {
-            const spyOnChange = jasmine.createSpy('onChange');
+            const spyOnChange = jest.fn();
             shallowRadioSelect({
                 onChange: spyOnChange,
             });
@@ -138,7 +138,7 @@ describe('<RadioSelect />', () => {
         });
 
         it('should call onChangeCallback prop when the child call onClick', () => {
-            const spyOnChangeCallback = jasmine.createSpy('onChangeCallback');
+            const spyOnChangeCallback = jest.fn();
             shallowRadioSelect({
                 onChangeCallback: spyOnChangeCallback,
             });

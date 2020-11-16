@@ -63,7 +63,7 @@ describe('Reducers', () => {
                 const newState = inputsReducer(oldState, action);
                 const newInput: IInputState = getNewInput(newState, action)[0];
 
-                expect(newInput).toEqual(jasmine.objectContaining(action.payload));
+                expect(newInput).toEqual(expect.objectContaining(action.payload));
             });
 
             it('should return an input with the value in the payload if passed', () => {

@@ -23,7 +23,7 @@ describe('Facets', () => {
         let store: Store<IReactVaporState>;
 
         beforeEach(() => {
-            const onToggleFacet = jasmine.createSpy('onToggleFacet');
+            const onToggleFacet = jest.fn();
             facet = 'facetTitle';
             facetRows = [
                 <FacetRow
@@ -58,7 +58,7 @@ describe('Facets', () => {
 
         afterEach(() => {
             store.dispatch(clearState());
-            wrapper.detach();
+            wrapper?.unmount(); // <-- new
         });
 
         it('should get if the rows are opened as a prop', () => {

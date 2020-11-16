@@ -123,3 +123,7 @@ export const searchBarConnectedPropsScenarios: ISearchBarProps[] = [
         onChange: noop,
     },
 ];
+
+it('should contain at least one test', () => {
+    expect(true).toBe(true); // complains with empty test
+});

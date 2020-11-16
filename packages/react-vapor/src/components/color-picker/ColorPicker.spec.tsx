@@ -56,13 +56,13 @@ describe('ColorPicker', () => {
     it('should add state input on mount', () => {
         mountWithStore(<ColorPicker id="foo" />, store);
 
-        expect(store.getActions()).toContain(addInput('foo'));
+        expect(store.getActions()).toContainEqual(addInput('foo'));
     });
 
     it('should remove state input on destroy', () => {
         const picker = mountWithStore(<ColorPicker id="foo" />, store);
         picker.unmount();
 
-        expect(store.getActions()).toContain(removeInput('foo'));
+        expect(store.getActions()).toContainEqual(removeInput('foo'));
     });
 });

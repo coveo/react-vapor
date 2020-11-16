@@ -88,10 +88,10 @@ describe('Multiline box container', () => {
 
         describe('once rendered without errors', () => {
             let MultilineBoxContainerWithSpy: any;
-            let spyContainerNode: jasmine.Spy;
+            let spyContainerNode: jest.Mock<any, any>;
 
             beforeEach(() => {
-                spyContainerNode = jasmine.createSpy('containerNode').and.returnValue(<div></div>);
+                spyContainerNode = jest.fn(() => <div></div>);
 
                 MultilineBoxContainerWithSpy = _.compose(
                     multilineBoxContainer({

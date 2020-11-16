@@ -37,7 +37,7 @@ describe('ModalHeader', () => {
 
         afterEach(() => {
             store.dispatch(clearState());
-            wrapper.detach();
+            wrapper?.unmount(); // <-- new
         });
 
         it('should get its id as a prop', () => {

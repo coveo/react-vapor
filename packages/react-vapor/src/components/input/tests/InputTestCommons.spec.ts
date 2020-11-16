@@ -79,3 +79,7 @@ export const inputPossibleProps: IInputProps[] = [
         validateOnMount: true,
     },
 ];
+
+it('should contain at least one test', () => {
+    expect(true).toBe(true); // complains with empty test
+});

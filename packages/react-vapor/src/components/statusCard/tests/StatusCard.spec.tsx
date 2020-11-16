@@ -1,5 +1,6 @@
 import {mount, ReactWrapper, shallow} from 'enzyme';
 import * as React from 'react';
+import {createTestAppContainer, removeTestAppContainer} from '../../../utils/tests/TestUtils';
 
 import {Loading} from '../../loading/Loading';
 import {Svg} from '../../svg/Svg';
@@ -32,12 +33,12 @@ describe('StatusCard', () => {
         };
 
         beforeEach(() => {
+            createTestAppContainer();
             mountWithProps();
         });
 
         afterEach(() => {
-            statusCard.unmount();
-            statusCard.detach();
+            removeTestAppContainer();
         });
 
         it('should get the props correctly', () => {

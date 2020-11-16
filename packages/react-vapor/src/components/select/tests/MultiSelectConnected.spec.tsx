@@ -37,7 +37,6 @@ describe('Select', () => {
 
         afterEach(() => {
             store.dispatch(clearState());
-            wrapper.detach();
         });
 
         describe('mount and unmount', () => {
@@ -121,7 +120,7 @@ describe('Select', () => {
 
         it('should contains a SelectedOption for a selected custom value', () => {
             const customValue = 'b';
-            spyOn(SelectSelector, 'getMultiSelectSelectedValues').and.returnValue(['a', customValue]);
+            jest.spyOn(SelectSelector, 'getMultiSelectSelectedValues').mockReturnValue(['a', customValue]);
             mountMultiSelect([]);
 
             expect(multiSelect.find(SelectedOption).at(1).props().value).toBe(customValue);
@@ -131,7 +130,7 @@ describe('Select', () => {
             const itemSelected = 'dis 1';
             const customValue: string = 'c';
 
-            spyOn(SelectSelector, 'getMultiSelectSelectedValues').and.returnValue([itemSelected, customValue]);
+            jest.spyOn(SelectSelector, 'getMultiSelectSelectedValues').mockReturnValue([itemSelected, customValue]);
             mountMultiSelect([{value: 'b'}, {value: itemSelected, selected: true}]);
 
             expect(multiSelect.find(SelectedOption).length).toBe(2);

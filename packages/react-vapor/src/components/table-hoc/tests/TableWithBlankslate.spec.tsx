@@ -26,9 +26,9 @@ describe('Table HOC', () => {
             const shallowWithProps = (props: Partial<ITableHOCProps> = {}) =>
                 shallowWithState(<TableWithBlankSlate {...defaultProps} {...props} />, {});
 
-            let renderSpy: jasmine.Spy;
+            let renderSpy: jest.Mock<any, any>;
             beforeEach(() => {
-                renderSpy = jasmine.createSpy('render');
+                renderSpy = jest.fn();
             });
 
             it('should render a TableHOC', () => {

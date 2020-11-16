@@ -101,3 +101,7 @@ export const collapsiblePossibleProps: CollapsibleOwnProps[] = [
         className: 'bg-white',
     },
 ];
+
+it('should contain at least one test', () => {
+    expect(true).toBe(true); // complains with empty test
+});

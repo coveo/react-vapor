@@ -24,7 +24,7 @@ describe('ButtonWithRefreshCallback tests', () => {
 
         describe('once mounted', () => {
             it('should call the callback on click button', () => {
-                const spy = jasmine.createSpy('callback');
+                const spy = jest.fn();
 
                 const component = shallowWithState(<ButtonWithRefreshCallback {...defaultProps} callback={spy} />, {
                     refreshCallback: {id: RefreshStatus.inProgress},
@@ -42,7 +42,7 @@ describe('ButtonWithRefreshCallback tests', () => {
                 const component = shallowWithStore(<ButtonWithRefreshCallback {...defaultProps} />, store).dive();
                 component.find(Button).props().onClick();
 
-                expect(store.getActions()).toContain(RefreshCallBackActions.stop(defaultProps.id));
+                expect(store.getActions()).toContainEqual(RefreshCallBackActions.stop(defaultProps.id));
             });
 
             it('should disable the button if the status is "stop"', () => {

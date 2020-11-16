@@ -18,7 +18,7 @@ describe('DeleteInputAction', () => {
         });
 
         afterEach(() => {
-            deleteInput.detach();
+            deleteInput?.unmount(); // <-- new
         });
 
         it('should render title prop if prop is set', () => {

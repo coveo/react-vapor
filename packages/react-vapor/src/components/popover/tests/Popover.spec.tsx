@@ -12,7 +12,7 @@ describe('<Popover>', () => {
     const popoverElementId = 'PopoverElement';
     const popoverToggleSelector = `#${popoverToggleId}`;
 
-    let toggleOpenedSpy: jasmine.Spy;
+    let toggleOpenedSpy: jest.SpyInstance;
 
     const mountPopover = (props: IPopoverProps) =>
         (popoverWrapper = mount(
@@ -28,7 +28,7 @@ describe('<Popover>', () => {
             attachment: 'top left',
         };
 
-        toggleOpenedSpy = spyOn<any>(Popover.prototype, 'toggleOpened').and.callThrough();
+        toggleOpenedSpy = jest.spyOn(Popover.prototype, 'toggleOpened');
     });
 
     it('should render without error', () => {
@@ -60,7 +60,6 @@ describe('<Popover>', () => {
 
         expect(() => {
             popoverWrapper.unmount();
-            popoverWrapper.detach();
         }).not.toThrow();
     });
 
@@ -84,7 +83,7 @@ describe('<Popover>', () => {
 
     describe('Mounted Popover', () => {
         afterEach(() => {
-            popoverWrapper.detach();
+            popoverWrapper?.unmount(); // <-- new
         });
 
         describe('Toggle opened behavior', () => {
@@ -111,10 +110,10 @@ describe('<Popover>', () => {
             });
 
             describe('With a controlled Popover', () => {
-                let onToggleSpy: jasmine.Spy;
+                let onToggleSpy: jest.Mock<any, any>;
 
                 beforeEach(() => {
-                    onToggleSpy = jasmine.createSpy('onToggleSpy');
+                    onToggleSpy = jest.fn();
 
                     popoverProps.onToggle = onToggleSpy;
 
@@ -124,7 +123,7 @@ describe('<Popover>', () => {
                 it('should call the onToggle prop with true when calling toggleOpened with isOpen: true', () => {
                     (popoverWrapper.instance() as Popover).toggleOpened(true);
 
-                    expect(onToggleSpy.calls.count()).toBe(1);
+                    expect(onToggleSpy.mock.calls.length).toBe(1);
 
                     expect(onToggleSpy).toHaveBeenCalledWith(true);
                 });
@@ -132,7 +131,7 @@ describe('<Popover>', () => {
                 it('should call the onToggle prop with false when calling toggleOpened with isOpen: false', () => {
                     (popoverWrapper.instance() as Popover).toggleOpened(false);
 
-                    expect(onToggleSpy.calls.count()).toBe(1);
+                    expect(onToggleSpy.mock.calls.length).toBe(1);
 
                     expect(onToggleSpy).toHaveBeenCalledWith(false);
                 });
@@ -147,7 +146,7 @@ describe('<Popover>', () => {
             it('should open the popover on click toggle if popover was closed', () => {
                 popoverWrapper.find(popoverToggleSelector).simulate('click');
 
-                expect(toggleOpenedSpy.calls.count()).toBe(1);
+                expect(toggleOpenedSpy.mock.calls.length).toBe(1);
 
                 expect(toggleOpenedSpy).toHaveBeenCalledWith(true);
             });
@@ -158,7 +157,7 @@ describe('<Popover>', () => {
 
                 popoverWrapper.find(popoverToggleSelector).simulate('click');
 
-                expect(toggleOpenedSpy.calls.count()).toBe(2);
+                expect(toggleOpenedSpy.mock.calls.length).toBe(2);
 
                 expect(toggleOpenedSpy).toHaveBeenCalledWith(false);
             });
@@ -177,13 +176,13 @@ describe('<Popover>', () => {
                 // Using getElementById here since the Tether element is being rendered outside the popoverWrapper.
                 document.getElementById(popoverElementId).click();
 
-                expect(toggleOpenedSpy.calls.count()).toBe(0);
+                expect(toggleOpenedSpy.mock.calls.length).toBe(0);
             });
 
             it('should close the popover when clicking outside Popover', () => {
                 document.getElementById('App').click();
 
-                expect(toggleOpenedSpy.calls.count()).toBe(1);
+                expect(toggleOpenedSpy.mock.calls.length).toBe(1);
 
                 expect(toggleOpenedSpy).toHaveBeenCalledWith(false);
             });

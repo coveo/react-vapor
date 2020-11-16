@@ -44,7 +44,7 @@ describe('Tables', () => {
 
         afterEach(() => {
             store.dispatch(clearState());
-            wrapper.detach();
+            wrapper?.unmount(); // <-- new
         });
 
         it('should get its sorted prop from the state', () => {

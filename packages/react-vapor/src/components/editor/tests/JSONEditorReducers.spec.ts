@@ -53,7 +53,7 @@ describe('JSONEditorReducers', () => {
             const newState = jsonEditorsReducer(oldState, action);
             const newJSONEditor: JSONEditorState = getNewJSONEditor(newState, action)[0];
 
-            expect(newJSONEditor).toEqual(jasmine.objectContaining(action.payload));
+            expect(newJSONEditor).toEqual(expect.objectContaining(action.payload));
         });
 
         it('should return a jsonEditor with the value in the payload if passed', () => {
@@ -66,7 +66,7 @@ describe('JSONEditorReducers', () => {
         });
 
         it('should return a jsonEditor with the valid status if passed', () => {
-            spyOn(JSONEditorUtils, 'validateValue').and.returnValue(true);
+            jest.spyOn(JSONEditorUtils, 'validateValue').mockReturnValue(true);
             const action = JSONEditorActions.addJSONEditor('new-json-editor', '{}');
             const newState = jsonEditorsReducer(oldState, action);
             const newJSONEditor = getNewJSONEditor(newState, action)[0];
@@ -102,7 +102,7 @@ describe('JSONEditorReducers', () => {
             });
 
             it('should return a jsonEditor with the valid status if passed', () => {
-                spyOn(JSONEditorUtils, 'validateValue').and.returnValue(true);
+                jest.spyOn(JSONEditorUtils, 'validateValue').mockReturnValue(true);
                 const action = JSONEditorActions.updateJSONEditorValue(oldState[0].id, '{}');
                 const newState = jsonEditorsReducer(oldState, action);
 

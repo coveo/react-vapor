@@ -1,8 +1,9 @@
-import {ShallowWrapper} from 'enzyme';
-import {shallowWithState, shallowWithStore} from 'enzyme-redux';
+import {shallowWithState} from 'enzyme-redux';
 import * as React from 'react';
 import * as _ from 'underscore';
 
+import {HOCTableRowState} from '..';
+import {clearState} from '../../../utils';
 import {getStoreMock, ReactVaporMockStore} from '../../../utils/tests/TestUtils';
 import {TableHOCRowActions} from '../actions/TableHOCRowActions';
 import {TableHOC} from '../TableHOC';
@@ -48,50 +49,48 @@ describe('Table HOC', () => {
 
         describe('click outside', () => {
             const id = 'a';
-            let wrapper: ShallowWrapper;
             let store: ReactVaporMockStore;
 
-            const shallowComponent = () => {
-                /* eslint-disable jasmine/no-unsafe-spy */
-                spyOn(document.body, 'contains').and.returnValue(true);
-                const spy = spyOn(document, 'addEventListener');
-                /* eslint-enable */
-
-                store = getStoreMock({});
-                wrapper = shallowWithStore(
-                    <TableWithActions id={id} data={[]} renderBody={_.identity} />,
-                    store
-                ).dive();
-                return [spy.calls.mostRecent().args[1]];
-            };
+            beforeEach(() => {
+                store = getStoreMock();
+            });
 
             afterEach(() => {
-                wrapper?.unmount();
+                store.dispatch(clearState());
             });
 
             it('should not dispatch an action when the user click outside and no rows are selected', () => {
-                spyOn(TableSelectors, 'getSelectedRows').and.returnValue([]);
-                const [clickOnElement] = shallowComponent();
+                const wrapper = shallowWithState(
+                    <TableWithActions id="a" data={[]} renderBody={_.identity} />,
+                    {}
+                ).dive();
+                jest.spyOn(TableSelectors, 'getSelectedRows').mockReturnValue([]);
 
-                clickOnElement({target: {closest: (): HTMLElement => null}});
+                wrapper.find(TableHOC).simulate('click', {target: {closest: (): HTMLElement => null}});
 
                 expect(store.getActions()).not.toContain(TableHOCRowActions.deselectAll(id));
             });
 
             it('should dispatch an action when the user click outside and a row is selected', () => {
-                spyOn(TableSelectors, 'getSelectedRows').and.returnValue([{}]);
-                const [clickOnElement] = shallowComponent();
+                jest.spyOn(TableSelectors, 'getSelectedRows').mockReturnValue([{} as HOCTableRowState]);
+                const wrapper = shallowWithState(
+                    <TableWithActions id="a" data={[{value: 'a'}]} renderBody={_.identity} />,
+                    {}
+                ).dive();
 
-                clickOnElement({target: {closest: (): HTMLElement => null}});
+                wrapper.find(TableHOC).simulate('click', {target: {closest: (): HTMLElement => null}});
 
-                expect(store.getActions()).toContain(TableHOCRowActions.deselectAll(id));
+                expect(store.getActions()).toContainEqual(TableHOCRowActions.deselectAll(id));
             });
 
             it('should not dispatch an action when the user click inside the table', () => {
-                spyOn(TableSelectors, 'getSelectedRows').and.returnValue([{}]);
-                const [clickOnElement] = shallowComponent();
+                jest.spyOn(TableSelectors, 'getSelectedRows').mockReturnValue([{} as HOCTableRowState]);
+                const wrapper = shallowWithState(
+                    <TableWithActions id="a" data={[]} renderBody={_.identity} />,
+                    {}
+                ).dive();
 
-                clickOnElement({target: {closest: () => jasmine.anything()}});
+                wrapper.find(TableHOC).simulate('click', {target: {closest: () => expect.anything()}});
 
                 expect(store.getActions()).not.toContain(TableHOCRowActions.deselectAll(id));
             });

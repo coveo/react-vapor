@@ -58,7 +58,7 @@ describe('SearchBarConnected', () => {
         );
 
         expect(store.getState().searchBars[0]).toEqual(
-            jasmine.objectContaining({searching: false, disabled: false, value: ''})
+            expect.objectContaining({searching: false, disabled: false, value: ''})
         );
     });
 
@@ -70,7 +70,7 @@ describe('SearchBarConnected', () => {
         );
 
         expect(store.getState().searchBars[0]).toEqual(
-            jasmine.objectContaining({searching: false, disabled: true, value: ''})
+            expect.objectContaining({searching: false, disabled: true, value: ''})
         );
     });
 

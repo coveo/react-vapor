@@ -10,6 +10,9 @@ export interface IBreadcrumbLinkProps {
     onClick?: (props: IBreadcrumbLinkProps) => boolean; // return false to cancel the href event
 }
 
+/**
+ * @deprecated
+ */
 export class BreadcrumbLink extends React.Component<IBreadcrumbLinkProps> {
     private handleOnClick(e: React.MouseEvent<HTMLAnchorElement>): boolean {
         if (this.props.onClick && !this.props.onClick(this.props)) {

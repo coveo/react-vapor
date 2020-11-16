@@ -39,12 +39,8 @@ describe('Toasts', () => {
             instance = component.instance() as ToastContainer;
         });
 
-        afterEach(() => {
-            component.detach();
-        });
-
         it('should call prop onRender on mounting if set', () => {
-            const renderSpy = jasmine.createSpy('onRender');
+            const renderSpy = jest.fn();
             const newToastAttributes = _.extend({}, basicProps, {onRender: renderSpy});
 
             expect(() => instance.componentWillMount()).not.toThrow();
@@ -56,7 +52,7 @@ describe('Toasts', () => {
         });
 
         it('should call prop onDestroy on unmounting if set', () => {
-            const destroySpy = jasmine.createSpy('onDestroy');
+            const destroySpy = jest.fn();
             const newToastAttributes = _.extend({}, basicProps, {onDestroy: destroySpy});
 
             expect(() => instance.componentWillUnmount()).not.toThrow();
@@ -80,7 +76,7 @@ describe('Toasts', () => {
         });
 
         it('should be call prop onCloseToast when a toast is closed', () => {
-            const onCloseToast = jasmine.createSpy('onCloseToast');
+            const onCloseToast = jest.fn();
             let newToastAttributes = _.extend({}, basicProps, {toasts: [{id: 'toast-id', title: 'some toast title'}]});
 
             component.setProps(newToastAttributes).mount();
@@ -109,7 +105,7 @@ describe('Toasts', () => {
         });
 
         it('should call toast method onClose when defined', () => {
-            const onCloseSpy = jasmine.createSpy('onClose');
+            const onCloseSpy = jest.fn();
             const newToastAttributes = _.extend({}, basicProps, {
                 toasts: [{id: 'toast-id', title: 'some toast title', onClose: onCloseSpy}],
             });

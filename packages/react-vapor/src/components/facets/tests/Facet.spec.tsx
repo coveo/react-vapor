@@ -1,6 +1,7 @@
 import {mount, ReactWrapper, shallow} from 'enzyme';
 import * as React from 'react';
 import * as _ from 'underscore';
+import {createTestAppContainer} from '../../../utils/tests/TestUtils';
 
 import {Facet, IFacet, IFacetProps} from '../Facet';
 import {FacetRow} from '../FacetRow';
@@ -9,8 +10,8 @@ describe('Facets', () => {
     const facetRows: IFacet[] = [];
     const facet: IFacet = {name: '', formattedName: '', count: '0'};
     /* eslint-disable jasmine/no-unsafe-spy */
-    const toggleFacet: (facet: string, facetRow: IFacet) => void = jasmine.createSpy('toggleFacet');
-    const clearFacet: (facet: string) => void = jasmine.createSpy('clearFacet');
+    const toggleFacet: (facet: string, facetRow: IFacet) => void = jest.fn();
+    const clearFacet: (facet: string) => void = jest.fn();
     /* eslint-enable jasmine/no-unsafe-spy */
     const maxRowsToShow = 4;
 
@@ -26,6 +27,7 @@ describe('Facets', () => {
         let facetInstance: Facet;
 
         beforeEach(() => {
+            createTestAppContainer();
             facetBasicAttributes = {
                 facetRows: facetRows,
                 facet: facet,
@@ -35,10 +37,6 @@ describe('Facets', () => {
             };
             facetComponent = mount(<Facet {...facetBasicAttributes} />, {attachTo: document.getElementById('App')});
             facetInstance = facetComponent.instance() as Facet;
-        });
-
-        afterEach(() => {
-            facetComponent.detach();
         });
 
         it('should not render anything when there are no rows to display', () => {
@@ -52,7 +50,7 @@ describe('Facets', () => {
         });
 
         it('should call prop onRender on mounting if set', () => {
-            const renderSpy = jasmine.createSpy('onRender');
+            const renderSpy = jest.fn();
             const newFacetAttributes = _.extend({}, facetBasicAttributes, {onRender: renderSpy});
 
             expect(() => facetInstance.componentWillMount()).not.toThrow();
@@ -61,11 +59,11 @@ describe('Facets', () => {
             facetComponent.setProps(newFacetAttributes);
             facetComponent.mount();
 
-            expect(renderSpy.calls.count()).toBe(1);
+            expect(renderSpy.mock.calls.length).toBe(1);
         });
 
         it('should call prop onDestroy on unmounting if set', () => {
-            const destroySpy = jasmine.createSpy('onDestroy');
+            const destroySpy = jest.fn();
             const newFacetAttributes = _.extend({}, facetBasicAttributes, {onRender: destroySpy});
 
             expect(() => facetInstance.componentWillUnmount()).not.toThrow();
@@ -75,7 +73,7 @@ describe('Facets', () => {
             facetComponent.mount();
             facetComponent.unmount();
 
-            expect(destroySpy.calls.count()).toBe(1);
+            expect(destroySpy.mock.calls.length).toBe(1);
         });
 
         it('should display normal <FacetMoreToggle /> and <FacetMoreRows /> if it has more than maxRowsToShow (number in props + 1 extra)', () => {
@@ -278,7 +276,7 @@ describe('Facets', () => {
         });
 
         it('should call onToggleFacet when calling buildCategoryFacet and prop is set', () => {
-            const onToggleFacetSpy = jasmine.createSpy('onToggleFacet');
+            const onToggleFacetSpy = jest.fn();
             const newFacetAttributes = _.extend({}, facetBasicAttributes, {onToggleFacet: onToggleFacetSpy});
 
             callBuildCategoryFacet();
@@ -303,7 +301,7 @@ describe('Facets', () => {
         });
 
         it('should call onClearFacet when calling buildCategoryFacet and prop is set', () => {
-            const onClearFacetSpy = jasmine.createSpy('onClearFacet');
+            const onClearFacetSpy = jest.fn();
             const newFacetAttributes = _.extend({}, facetBasicAttributes, {onClearFacet: onClearFacetSpy});
 
             callClearCategoryFacet();
@@ -348,14 +346,14 @@ describe('Facets', () => {
             facetComponent.mount();
 
             expect(facetComponent.find(FacetRow).length).toBe(4);
-            expect(facetComponent.find(FacetRow).at(0).props().facetRow).toEqual(jasmine.objectContaining(selected[1]));
-            expect(facetComponent.find(FacetRow).at(1).props().facetRow).toEqual(jasmine.objectContaining(selected[0]));
+            expect(facetComponent.find(FacetRow).at(0).props().facetRow).toEqual(expect.objectContaining(selected[1]));
+            expect(facetComponent.find(FacetRow).at(1).props().facetRow).toEqual(expect.objectContaining(selected[0]));
             expect(facetComponent.find(FacetRow).at(2).props().facetRow).toEqual(
-                jasmine.objectContaining(unselected[1])
+                expect.objectContaining(unselected[1])
             );
 
             expect(facetComponent.find(FacetRow).at(3).props().facetRow).toEqual(
-                jasmine.objectContaining(unselected[0])
+                expect.objectContaining(unselected[0])
             );
         });
     });

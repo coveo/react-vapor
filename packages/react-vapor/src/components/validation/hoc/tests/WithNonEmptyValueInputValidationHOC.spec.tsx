@@ -47,17 +47,17 @@ describe('WithNonEmptyValueInputValidationHOC', () => {
         });
 
         describe('after mount', () => {
-            let validateSpy: jasmine.Spy;
+            let validateSpy: jest.Mock<any, any>;
 
             beforeEach(() => {
-                validateSpy = jasmine.createSpy('validate');
+                validateSpy = jest.fn();
                 inputWrapper = shallowWithStore(<InputWithHOC {...INPUT_PROPS} validate={validateSpy} />, store).dive();
             });
 
             it('should dispatch a set error action when the validation fails', () => {
                 inputWrapper.prop('validate')('');
 
-                expect(store.getActions()).toContain(
+                expect(store.getActions()).toContainEqual(
                     ValidationActions.setError(INPUT_PROPS.id, INPUT_PROPS.validationMessage, ValidationTypes.nonEmpty)
                 );
             });

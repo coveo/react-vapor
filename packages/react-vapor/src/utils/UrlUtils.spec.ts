@@ -53,7 +53,7 @@ describe('UrlUtils', () => {
 
     describe('getSearchParams', () => {
         it('should transform the current query string into a parameters object', () => {
-            spyOn(UrlUtils, 'getQuery').and.returnValue('animal=tiger&age=7');
+            jest.spyOn(UrlUtils, 'getQuery').mockReturnValue('animal=tiger&age=7');
 
             expect(UrlUtils.getSearchParams()).toEqual({animal: 'tiger', age: 7});
         });

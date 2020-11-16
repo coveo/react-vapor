@@ -45,3 +45,7 @@ export const withColorsPropsScenarios: IColorBarProps[] = [
         className: ['one-class', 'two-classes', 'three-classes'],
     },
 ];
+
+it('should contain at least one test', () => {
+    expect(true).toBe(true); // complains with empty test
+});

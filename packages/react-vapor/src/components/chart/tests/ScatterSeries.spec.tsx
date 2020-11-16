@@ -1,5 +1,5 @@
 import {shallow} from 'enzyme';
-import React from 'react';
+import * as React from 'react';
 
 import {ChartUtils} from '../ChartUtils';
 import {ScatterSeries} from '../ScatterSeries';
@@ -20,7 +20,7 @@ describe('<ScatterSeries />', () => {
     });
 
     it('should render a circle per point in every series', () => {
-        spyOn(React, 'useContext').and.returnValue(XYChartContextMock);
+        jest.spyOn(React, 'useContext').mockReturnValue(XYChartContextMock);
 
         const {series} = XYChartContextMock;
         const component = shallow(<ScatterSeries />);

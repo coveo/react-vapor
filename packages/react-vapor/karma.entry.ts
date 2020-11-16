@@ -57,7 +57,7 @@ describe('React-Vapor', () => {
             $('body').append('<div id="App" class="coveo-styleguide"></div>');
         }
         Defaults.APP_ELEMENT = '#App';
-        jasmine.clock().uninstall();
+        jest.clearAllTimers();
     });
 
     afterEach(() => {

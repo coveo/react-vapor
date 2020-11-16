@@ -41,7 +41,7 @@ describe('<CollapsibleConnected />', () => {
 
                 wrapper.find(`.${collapsibleProps.headerClasses}`).simulate('click');
 
-                expect(store.getActions()).toContain(setCollapsibleExpanded(collapsibleProps.id, false));
+                expect(store.getActions()).toContainEqual(setCollapsibleExpanded(collapsibleProps.id, false));
             });
 
             it('should toggle the expanded prop to true on click of the collapsible header button', () => {
@@ -49,7 +49,7 @@ describe('<CollapsibleConnected />', () => {
 
                 wrapper.find(`.${collapsibleProps.headerClasses}`).simulate('click');
 
-                expect(store.getActions()).toContain(setCollapsibleExpanded(collapsibleProps.id, true));
+                expect(store.getActions()).toContainEqual(setCollapsibleExpanded(collapsibleProps.id, true));
             });
 
             it('should not toggle the expanded prop on click of the collapsible header button if disabled', () => {

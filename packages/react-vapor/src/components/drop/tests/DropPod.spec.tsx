@@ -1,7 +1,7 @@
 import {shallow, ShallowWrapper} from 'enzyme';
 import {shallowWithState} from 'enzyme-redux';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import * as _ from 'underscore';
 
 import {Defaults} from '../../../Defaults';
@@ -19,8 +19,8 @@ describe('DropPod', () => {
             left: 50,
         };
 
-        let bottomPositionCalculatedSpy: jasmine.Spy;
-        let topPositionCalculatedSpy: jasmine.Spy;
+        let bottomPositionCalculatedSpy: jest.SpyInstance;
+        let topPositionCalculatedSpy: jest.SpyInstance;
         const setupReference = (parentOffset = {}, dropOffset = {}, styleCalculated = {}, buttonOffset = {}) => {
             /* eslint-disable jasmine/no-unsafe-spy */
             parentOffset = {...defaultParentOffset, ...parentOffset};
@@ -33,14 +33,17 @@ describe('DropPod', () => {
                           orientation: DropPodPosition.left,
                       },
                   };
-            bottomPositionCalculatedSpy = spyOn(DomPositionCalculator, 'bottom').and.returnValue(bottomStyle);
-            topPositionCalculatedSpy = spyOn(DomPositionCalculator, 'top').and.returnValue({});
-            spyOn(React, 'createRef').and.returnValue({
+            bottomPositionCalculatedSpy = jest.spyOn(DomPositionCalculator, 'bottom').mockReturnValue(bottomStyle);
+            topPositionCalculatedSpy = jest.spyOn(DomPositionCalculator, 'top').mockReturnValue({});
+            jest.spyOn(React, 'createRef').mockReturnValue({
                 current: {
                     getBoundingClientRect: () => dropOffset,
                 } as any,
             });
-            spyOn(window, 'getComputedStyle').and.returnValue({paddingLeft: '10', paddingRight: '10'});
+            jest.spyOn(window, 'getComputedStyle').mockReturnValue({
+                paddingLeft: '10',
+                paddingRight: '10',
+            } as CSSStyleDeclaration);
 
             buttonRef = {
                 current: {
@@ -54,8 +57,8 @@ describe('DropPod', () => {
                 },
             } as any;
 
-            spyOn(MutationObserver.prototype, 'observe');
-            spyOn(MutationObserver.prototype, 'disconnect');
+            jest.spyOn(MutationObserver.prototype, 'observe').mockImplementation(() => {});
+            jest.spyOn(MutationObserver.prototype, 'disconnect').mockImplementation(() => {});
             /* eslint-enable jasmine/no-unsafe-spy */
         };
 
@@ -149,8 +152,8 @@ describe('DropPod', () => {
                         const expectedElement = document.querySelector('head');
                         Defaults.DROP_ROOT = 'head';
 
-                        spyOn(document, 'querySelector').and.callThrough();
-                        const portalSpy: jasmine.Spy = spyOn(ReactDOM, 'createPortal');
+                        jest.spyOn(document, 'querySelector');
+                        const portalSpy: jest.SpyInstance = jest.spyOn(ReactDOM, 'createPortal');
                         shallow(<DropPod renderDrop={() => '🍟'} ref={buttonRef} />, {}).dive();
 
                         expect(portalSpy).toHaveBeenCalledWith('🍟', expectedElement);
@@ -160,8 +163,8 @@ describe('DropPod', () => {
                         const expectedElement = document.querySelector('head');
                         Defaults.DROP_ROOT = '#🥔';
 
-                        spyOn(document, 'querySelector').and.callThrough();
-                        const portalSpy: jasmine.Spy = spyOn(ReactDOM, 'createPortal');
+                        jest.spyOn(document, 'querySelector');
+                        const portalSpy: jest.SpyInstance = jest.spyOn(ReactDOM, 'createPortal');
                         shallow(<DropPod renderDrop={() => '🍟'} selector="head" ref={buttonRef} />, {}).dive();
 
                         expect(portalSpy).toHaveBeenCalledWith('🍟', expectedElement);
@@ -508,7 +511,7 @@ describe('DropPod', () => {
                     let RWrapper: ShallowWrapper;
 
                     it('should add events if the dropPod is open', () => {
-                        const spy = spyOn(window, 'addEventListener');
+                        const spy = jest.spyOn(window, 'addEventListener');
 
                         shallowWithState(<DropPod renderDrop={() => defaultDrop} isOpen={true} />, {}).dive();
 
@@ -516,7 +519,7 @@ describe('DropPod', () => {
                     });
 
                     it('should not add events if the dropPod is close', () => {
-                        const spy = spyOn(window, 'addEventListener');
+                        const spy = jest.spyOn(window, 'addEventListener');
 
                         shallowWithState(<DropPod renderDrop={() => defaultDrop} isOpen={false} />, {}).dive();
 
@@ -524,7 +527,7 @@ describe('DropPod', () => {
                     });
 
                     it('should remove events on unmount', () => {
-                        const spy = spyOn(window, 'removeEventListener');
+                        const spy = jest.spyOn(window, 'removeEventListener');
 
                         RWrapper = shallowWithState(
                             <DropPod renderDrop={() => defaultDrop} isOpen={false} />,
@@ -537,7 +540,7 @@ describe('DropPod', () => {
                     });
 
                     it('should add events if the prop isOpen change to true on update', () => {
-                        const spy = spyOn(window, 'addEventListener');
+                        const spy = jest.spyOn(window, 'addEventListener');
 
                         RWrapper = shallowWithState(
                             <DropPod renderDrop={() => defaultDrop} isOpen={false} />,
@@ -551,7 +554,7 @@ describe('DropPod', () => {
                     });
 
                     it('should not add events if the prop isOpen do not change on update', () => {
-                        const spy = spyOn(window, 'addEventListener');
+                        const spy = jest.spyOn(window, 'addEventListener');
 
                         RWrapper = shallowWithState(
                             <DropPod renderDrop={() => defaultDrop} isOpen={false} />,
@@ -565,7 +568,7 @@ describe('DropPod', () => {
                     });
 
                     it('should remove events if the prop isOpen change to false on update', () => {
-                        const spy = spyOn(window, 'removeEventListener');
+                        const spy = jest.spyOn(window, 'removeEventListener');
 
                         RWrapper = shallowWithState(
                             <DropPod renderDrop={() => defaultDrop} isOpen={true} />,

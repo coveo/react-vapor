@@ -253,7 +253,7 @@ describe('<Slider/>', () => {
         });
 
         it('should call the onChange callBack function on state change', () => {
-            const callBackSpy = jasmine.createSpy('🥔');
+            const callBackSpy = jest.fn();
             mountedSlider = mount(
                 <Provider store={store}>
                     <Slider
@@ -266,7 +266,7 @@ describe('<Slider/>', () => {
                 </Provider>
             );
 
-            callBackSpy.calls.reset();
+            callBackSpy.mockReset();
             mountedSlider.find(Range).prop('onChange')([40, 50]);
 
             expect(callBackSpy).toHaveBeenCalledTimes(1);

@@ -17,14 +17,17 @@ describe('Banner', () => {
 
     describe('<Banner />', () => {
         const mountWithProps = (props?: Partial<BannerProps>) => {
-            if (banner && banner.length) {
-                banner.unmount();
-            }
             banner = mount(<Banner {...basicProps} {...props} />);
         };
 
         beforeEach(() => {
             mountWithProps();
+        });
+
+        afterEach(() => {
+            if (banner && banner.length) {
+                banner.unmount();
+            }
         });
 
         it('should get the props correctly', () => {
@@ -57,6 +60,7 @@ describe('Banner', () => {
             expect(banner.find('.center').length).toBe(1);
         });
 
+        // BROKEN
         it('should have the class styles.bannerWarningTitle on the title if messageCondition is set to Warning', () => {
             expect(banner.find(`.${styles.bannerWarningTitle}`).length).toBe(0);
 
@@ -81,6 +85,7 @@ describe('Banner', () => {
             expect(banner.find('h2').length).toBe(1);
         });
 
+        // BROKEN
         it('should display a bannerRight if there are some topRightInfos or bottomRightInfos', () => {
             expect(banner.find(`.${styles.bannerRight}`).length).toBe(0);
 
@@ -101,6 +106,7 @@ describe('Banner', () => {
             expect(banner.find('h3').length).toBe(1);
         });
 
+        // BROKEN
         it('should display a bannerDescription if there are children', () => {
             expect(banner.find(`.${styles.bannerDescription}`).length).toBe(0);
 
@@ -109,6 +115,7 @@ describe('Banner', () => {
             expect(banner.find(`.${styles.bannerDescription}`).length).toBe(1);
         });
 
+        // BROKEN
         it('should display a bannerWarningIcon if the messageState is either set to Warning or Error', () => {
             expect(banner.html()).not.toContain(styles.bannerWarningIcon);
 

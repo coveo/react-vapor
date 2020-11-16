@@ -22,7 +22,6 @@ describe('<InputConnected />', () => {
 
     afterEach(() => {
         store.dispatch(clearState());
-        wrapper?.detach();
     });
 
     const mountComponentWithProps = (props: IInputProps = {}) => {
@@ -188,7 +187,7 @@ describe('<InputConnected />', () => {
         });
 
         it('should call changeDirtyState if set as props', () => {
-            const changeDirtyStateSpy = jasmine.createSpy();
+            const changeDirtyStateSpy = jest.fn();
             const wrapperInputConnected = shallowWithState(<InputConnected />, {});
 
             wrapperInputConnected.props().onChange();

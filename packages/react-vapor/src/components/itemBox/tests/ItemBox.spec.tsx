@@ -123,7 +123,7 @@ describe('ItemBox', () => {
         });
 
         it('should call the onOptionClick on click', () => {
-            const onOptionClick: jasmine.Spy = jasmine.createSpy('onOptionClick');
+            const onOptionClick: jest.Mock<any, any> = jest.fn();
 
             renderItemBox({
                 onOptionClick,
@@ -135,7 +135,7 @@ describe('ItemBox', () => {
         });
 
         it('should scroll the parent element if needed', () => {
-            const spy = spyOn<any>(ItemBox.prototype, 'scrollIfNeeded').and.callThrough();
+            const spy = jest.spyOn(ItemBox.prototype as any, 'scrollIfNeeded'); // as any needed to spyOn private method in Jest
 
             renderItemBox({});
 

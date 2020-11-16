@@ -1,5 +1,5 @@
 import {shallow} from 'enzyme';
-import React from 'react';
+import * as React from 'react';
 
 import {BarSeries} from '../BarSeries';
 import {ChartUtils} from '../ChartUtils';
@@ -20,7 +20,7 @@ describe('<BarSeries />', () => {
     });
 
     it('should render a rect for every point in every serie', () => {
-        spyOn(React, 'useContext').and.returnValue(XYChartContextMock);
+        jest.spyOn(React, 'useContext').mockReturnValue(XYChartContextMock);
 
         const {series} = XYChartContextMock;
         const component = shallow(<BarSeries />);
@@ -29,7 +29,7 @@ describe('<BarSeries />', () => {
     });
 
     it('should not throw when there is only one point in a serie', () => {
-        spyOn(React, 'useContext').and.returnValue(XYChartOnePointContextMock);
+        jest.spyOn(React, 'useContext').mockReturnValue(XYChartOnePointContextMock);
 
         expect(() => {
             shallow(<BarSeries />);
