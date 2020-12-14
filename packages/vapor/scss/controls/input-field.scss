@@ -20,7 +20,7 @@
         font-size: $input-font-size;
         background-color: transparent;
         border: 0;
-        border-bottom: $input-border;
+        border-bottom: var(--input-default-border);
         border-radius: 0;
         outline: 0;
         box-shadow: none;
@@ -29,10 +29,10 @@
         &:focus:not([readonly]),
         &:valid,
         &:disabled {
-            color: var(--dark-grey);
-            border-bottom: 1px solid var(--lynch);
+            color: var(--input-disabled-color);
+            border-bottom: 1px solid var(--input-default-border-color);
 
-            @include placeholder(var(--lynch));
+            @include placeholder(var(--input-default-placeholder-color));
 
             & + label,
             & + span {

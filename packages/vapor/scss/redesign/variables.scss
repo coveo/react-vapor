@@ -110,4 +110,17 @@
 
     // Border
     --default-border-color: var(--medium-grey);
+
+    // Input
+    --input-default-color: var(--dark-grey);
+    --input-default-border-color: var(--lynch);
+    --input-default-placeholder-color: var(--lynch);
+
+    --input-filled-text-color: var(--grey-100);
+
+    --input-disabled-color: var(--red);
+    --input-success-color: var(--green);
+    --input-focus-color: var(--turquoise);
+
+    --input-default-border: 1px solid var(--input-default-border-color);
 }

@@ -20,16 +20,17 @@ input[type='search'],
 input[type='tel'],
 input[type='color'] {
     padding: 3px 6px;
-    color: var(--dark-grey);
+    color: var(--input-default-color);
     font-size: $title-font-size;
     font-family: var(--main-font);
-    border: 1px solid var(--medium-grey);
+    border: 1px solid var(--input-default-border-color);
     border-radius: 2px;
 }
 
 input[type='text'],
 textarea {
-    &.admin-invisible-textbox {
+    &.admin-invisible-textbox,
+    &.invisible-textarea {
         margin-bottom: 0;
         padding: 4px 6px;
         background: transparent;
