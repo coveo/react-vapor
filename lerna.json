@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
     "version": "9.28.2",
+=======
+    "version": "10.0.0-next.0",
+>>>>>>> 3289f5d79... chore(release): [version bump] - v10.0.0-next.0
     "packages": [
         "packages/*"
     ],
