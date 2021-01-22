@@ -51,13 +51,13 @@
 
         &:checked + label {
             &:before {
-                border: 2px solid #1372ec; // digital-blue-60
+                border: 2px solid var(--medium-blue);
             }
 
             &:after {
-                z-index: 0;
-                background-color: #1372ec; // digital-blue-60
-                transform: scale(0.5);
+                background-color: var(--radiobutton-checked-color);
+                transform: scale(1);
+                content: 'hey';
             }
         }
 
