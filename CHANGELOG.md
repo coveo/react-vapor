@@ -3,53 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-<<<<<<< HEAD
-## [9.28.2](https://github.com/coveo/react-vapor/compare/v9.28.1...v9.28.2) (2021-01-26)
-
-
-### Bug Fixes
-
-* **drop pod:** revert portal removal ([9c0b663](https://github.com/coveo/react-vapor/commit/9c0b663575d431c87128150aeeca9d1e614f0866))
-* **multiline-field.scss:** when disabled, hide add, change remove icons ([c2ae7d1](https://github.com/coveo/react-vapor/commit/c2ae7d1f015f87103303d48409f39f2b5286d8ca))
-
-
-
-
-
-## [9.28.1](https://github.com/coveo/react-vapor/compare/v9.28.0...v9.28.1) (2021-01-25)
-
-
-### Bug Fixes
-
-* packages/vapor/package.json & packages/vapor/package-lock.json to reduce vulnerabilities ([#1826](https://github.com/coveo/react-vapor/issues/1826)) ([dbfcd3b](https://github.com/coveo/react-vapor/commit/dbfcd3b775d175819568c3557077754ba4e9e9bb))
-
-
-
-
-
-# [9.28.0](https://github.com/coveo/react-vapor/compare/v9.27.1...v9.28.0) (2021-01-25)
-
-
-### Features
-
-* **rebranding:** add new svgs ([#1829](https://github.com/coveo/react-vapor/issues/1829)) ([0d2f373](https://github.com/coveo/react-vapor/commit/0d2f373cdd684b2711976abc278a8181f35922ba))
-
-
-
-
-
-## [9.27.1](https://github.com/coveo/react-vapor/compare/v9.27.0...v9.27.1) (2021-01-22)
-
-**Note:** Version bump only for package root
-
-
-
-
-
-# [9.27.0](https://github.com/coveo/react-vapor/compare/v9.26.2...v9.27.0) (2021-01-22)
-=======
 # [10.0.0-next.0](https://github.com/coveo/react-vapor/compare/v9.26.2...v10.0.0-next.0) (2021-01-22)
->>>>>>> 3289f5d79... chore(release): [version bump] - v10.0.0-next.0
 
 
 ### Features

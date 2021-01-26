@@ -56,8 +56,10 @@
 
             &:after {
                 background-color: var(--radiobutton-checked-color);
+                // transform: translate(0px, -1px);
                 transform: scale(1);
-                content: 'hey';
+                // content: url("data:image/svg+xml; utf8, <svg width='13' height='10' viewBox='0 0 13 10' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M1 5.14286L4.6 9L12 1' stroke='white' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+                content: url("data:image/svg+xml; utf8, <svg width='13' height='10' fill='white' viewBox='0 0 10 10' xmlns='http://www.w3.org/2000/svg'><path d='m3.144 8-2.977-3.109c-.223-.232-.223-.61 0-.843s.586-.232.809 0l2.168 2.264 5.881-6.138c.222-.232.585-.232.809 0 .222.233.222.611-.001.844z'/></svg>");
             }
         }
 
