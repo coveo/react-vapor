@@ -22,6 +22,7 @@ library(
 )
 
 def skipRemainingStages = false
+def commitMessage = sh(returnStdout: true, script: "git log -1 --pretty=%B").trim()
 
 pipeline {
 
@@ -48,7 +49,6 @@ pipeline {
       steps {
         script {
           setLastStageName();
-          commitMessage = sh(returnStdout: true, script: "git log -1 --pretty=%B").trim()
           if(commitMessage.contains("[version bump]")) {
             skipRemainingStages = true
             println "Skipping this build because it was triggered by a version bump."
@@ -91,6 +91,24 @@ pipeline {
           sh "npm cache clean --force"
           sh "rm -rf node_modules"
           sh "npm run setup"
+
+          def nextVersionFromGit(scope) {
+            def latestVersion = sh returnStdout: true, script: 'git describe --tags "$(git rev-list --tags=*.*.* --max-count=1 2> /dev/null)" 2> /dev/null || echo 0.0.0'
+            def (major, minor, patch) = latestVersion.tokenize('.').collect { it.toInteger() }
+            def nextVersion
+            switch (scope) {
+              case 'major':
+                nextVersion = "${major + 1}.0.0"
+                break
+              case 'minor':
+                nextVersion = "${major}.${minor + 1}.0"
+                break
+              case 'patch':
+                nextVersion = "${major}.${minor}.${patch + 1}"
+                break
+            }
+            nextVersion
+          }
 
           if (env.BRANCH_NAME ==~ /(master|release-.*)/) {
             sh "git fetch --tags origin ${env.BRANCH_NAME}"
