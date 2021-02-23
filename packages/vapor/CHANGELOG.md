@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.32.6](https://github.com/coveo/react-vapor/compare/v9.32.5...v9.32.6) (2021-02-22)
+
+
+### Bug Fixes
+
+* upgrade codemirror from 5.58.2 to 5.59.2 ([02b1cf9](https://github.com/coveo/react-vapor/commit/02b1cf9fd31e5f30efa0f9bed655b8a80cd463ae))
+
+
+
+
+
+## [9.32.5](https://github.com/coveo/react-vapor/compare/v9.32.4...v9.32.5) (2021-02-19)
+
+
+### Bug Fixes
+
+* **badge:** whitespace:noWrap ([9887385](https://github.com/coveo/react-vapor/commit/98873850f284ea8ad0645f5f5393aa0c827936d2))
+
+
+
+
+
 # [9.31.0](https://github.com/coveo/react-vapor/compare/v9.30.3...v9.31.0) (2021-02-12)
 
 
