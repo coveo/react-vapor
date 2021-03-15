@@ -85,7 +85,6 @@ const ModalWizardDisconneted: React.FunctionComponent<ModalWizardProps & Connect
                                 onClick={() => {
                                     if (isLastStep) {
                                         onFinish?.();
-                                        close();
                                     } else {
                                         setCurrentStep(currentStep + 1);
                                     }

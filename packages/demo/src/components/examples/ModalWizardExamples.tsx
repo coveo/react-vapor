@@ -20,6 +20,7 @@ import {
     withNonEmptySingleSelectHOC,
     SingleSelectConnected,
     withDirtySingleSelectHOC,
+    closeModal,
 } from 'react-vapor';
 
 import {IReactVaporExampleState} from '../../Reducers';
@@ -35,11 +36,13 @@ const enhanceExample1 = connect(
     }),
     (dispatch: IDispatch) => ({
         open: (id: string) => dispatch(openModal(id)),
+        close: (id: string) => dispatch(closeModal(id)),
     })
 );
 
 const StandardModalWizardDisconnected: React.FunctionComponent<ConnectedProps<typeof enhanceExample1>> = ({
     open,
+    close,
     selectedPath,
     inputTwoValue,
 }) => {
@@ -75,7 +78,10 @@ const StandardModalWizardDisconnected: React.FunctionComponent<ConnectedProps<ty
             <ModalWizard
                 id="standard-wizard"
                 title="Wizard 🧙‍♂️"
-                onFinish={() => alert('Congratulations! You completed the wizard')}
+                onFinish={() => {
+                    alert('Congratulations! You completed the wizard');
+                    close('standard-wizard');
+                }}
                 validateStep={validateStep}
                 isDirty={!!selectedPath || !!inputTwoValue}
             >
@@ -123,17 +129,22 @@ const NonEmptySelect = withDirtySingleSelectHOC(withNonEmptySingleSelectHOC(Sing
 
 const enhanceExample2 = connect(null, (dispatch: IDispatch) => ({
     open: (id: string) => dispatch(openModal(id)),
+    close: (id: string) => dispatch(closeModal(id)),
 }));
 
 const ModalWizardWithValidationIdsDisconnected: React.FunctionComponent<ConnectedProps<typeof enhanceExample2>> = ({
     open,
+    close,
 }) => (
     <Section level={2} title="ModalWizard with built-in validation ids">
         <Button name="Open wizard with validation ids" enabled primary onClick={() => open('validation-wizard')} />
         <ModalWizardWithValidations
             id="validation-wizard"
             title="Wizard 🧙‍♂️"
-            onFinish={() => alert('Congratulations! You completed the wizard')}
+            onFinish={() => {
+                alert('Congratulations! You completed the wizard');
+                close('validation-wizard');
+            }}
             validationIdsByStep={[['name-input'], ['favorite-animal-select']]}
         >
             <Form title="Step 1" mods={['mod-form-top-bottom-padding', 'mod-header-padding']}>
