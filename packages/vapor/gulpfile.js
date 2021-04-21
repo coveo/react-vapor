@@ -86,19 +86,6 @@ gulp.task('copy:js', () => {
     return gulp.src('./resources/js/**/*').pipe(gulp.dest('./dist/js/'));
 });
 
-gulp.task('palette', (done) => {
-    const paletteMap = fs
-        .readFileSync('./scss/common/palette.scss', 'utf8')
-        .match(/\$.+(?=:)/g)
-        .reduce(
-            (partialPalette, sassVariable) => `${partialPalette}    ${sassVariable.slice(1)}: ${sassVariable},\n`,
-            '$palette: (\n'
-        )
-        .concat(');\n');
-
-    fs.writeFile('./scss/common/palette-map.scss', paletteMap, done);
-});
-
 gulp.task('sprites', () => {
     const template =
         '<%= "i." + node.className + ", ." + node.className %> {\
@@ -226,7 +213,7 @@ gulp.task('svg', gulp.series('svg:enum'));
 
 gulp.task(
     'default',
-    gulp.series('lib', 'palette', 'sprites', gulp.parallel('copy:images', 'copy:fonts', 'copy:js'), 'svg')
+    gulp.series('lib', 'sprites', gulp.parallel('copy:images', 'copy:fonts', 'copy:js'), 'svg')
 );
 
 gulp.task('watch', () => {
