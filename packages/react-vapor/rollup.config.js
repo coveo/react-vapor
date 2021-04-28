@@ -26,7 +26,6 @@ export default {
             name: 'ReactVapor',
             globals: {
                 codemirror: 'CodeMirror',
-                d3: 'd3',
                 jquery: '$',
                 react: 'React',
                 'react-dom': 'ReactDOM',
@@ -40,7 +39,6 @@ export default {
             plugins: [
                 externalGlobals({
                     codemirror: 'CodeMirror',
-                    d3: 'd3',
                     jquery: '$',
                     react: 'React',
                     'react-dom': 'ReactDOM',
@@ -60,7 +58,6 @@ export default {
             name: 'ReactVapor',
             globals: {
                 codemirror: 'CodeMirror',
-                d3: 'd3',
                 jquery: '$',
                 react: 'React',
                 'react-dom': 'ReactDOM',
@@ -75,7 +72,6 @@ export default {
                 terser(),
                 externalGlobals({
                     codemirror: 'CodeMirror',
-                    d3: 'd3',
                     jquery: '$',
                     react: 'React',
                     'react-dom': 'ReactDOM',
@@ -91,7 +87,6 @@ export default {
     ].filter(Boolean),
     external: [
         'codemirror',
-        'd3',
         'jquery',
         'react',
         'react-dom',

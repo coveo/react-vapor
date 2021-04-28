@@ -183,7 +183,9 @@ importers:
       '@types/chosen-js': 1.6.2
       '@types/classnames': 2.2.9
       '@types/codemirror': 0.0.62
-      '@types/d3': 3.5.41
+      '@types/d3-array': ^2.9.0
+      '@types/d3-scale': ^3.2.2
+      '@types/d3-shape': ^2.0.0
       '@types/enzyme': 3.1.15
       '@types/enzyme-adapter-react-16': 1.0.6
       '@types/enzyme-redux': 0.2.1
@@ -219,6 +221,9 @@ importers:
       concurrently: 5.1.0
       coveo-styleguide: ^16.0.0-next.3
       d3: 3.5.17
+      d3-array: ^2.12.1
+      d3-scale: ^3.3.0
+      d3-shape: ^2.1.0
       del: 5.1.0
       dnd-core: 2.5.1
       enzyme: 3.8.0
@@ -279,8 +284,14 @@ importers:
       unidiff: 0.0.4
     dependencies:
       '@types/codemirror': 0.0.62
+      '@types/d3-array': 2.9.0
+      '@types/d3-scale': 3.2.2
+      '@types/d3-shape': 2.0.0
       '@types/rc-slider': 8.6.0
       chosen-js: 1.8.7
+      d3-array: 2.12.1
+      d3-scale: 3.3.0
+      d3-shape: 2.1.0
       query-string: 6.13.1
       rc-slider: 8.7.1
       rc-tooltip: 3.7.3
@@ -310,7 +321,6 @@ importers:
       '@testing-library/user-event': 12.8.3_@testing-library+dom@7.30.3
       '@types/chosen-js': 1.6.2
       '@types/classnames': 2.2.9
-      '@types/d3': 3.5.41
       '@types/enzyme': 3.1.15
       '@types/enzyme-adapter-react-16': 1.0.6
       '@types/enzyme-redux': 0.2.1
@@ -2779,9 +2789,29 @@ packages:
   /@types/codemirror/0.0.62:
     resolution: {integrity: sha512-0w0vA4wfkEF6GlQ0dBZHrAW7RTP2udN5wZZFFngVmvl37P2StSqNqDxP+hizd+EMOhRCUnrdSuWmAsIQczpLxQ==}
 
-  /@types/d3/3.5.41:
-    resolution: {integrity: sha512-dInnr7nSPsofnLggOf70xvsInUjf3tRrE8XmxsioXALWQHkwEWi7RhTBCa9mYmiUDHMtuanSDN/JOW187ChIhw==}
-    dev: true
+  /@types/d3-array/2.9.0:
+    resolution: {integrity: sha512-sdBMGfNvLUkBypPMEhOcKcblTQfgHbqbYrUqRE31jOwdDHBJBxz4co2MDAq93S4Cp++phk4UiwoEg/1hK3xXAQ==}
+    dev: false
+
+  /@types/d3-path/1.0.9:
+    resolution: {integrity: sha512-NaIeSIBiFgSC6IGUBjZWcscUJEq7vpVu7KthHN8eieTV9d9MqkSOZLH4chq1PmcKy06PNe3axLeKmRIyxJ+PZQ==}
+    dev: false
+
+  /@types/d3-scale/3.2.2:
+    resolution: {integrity: sha512-qpQe8G02tzUwt9sdWX1h8A/W0Q1+N48wMnYXVOkrzeLUkCfvzJYV9Ee3aORCS4dN4ONRLFmMvaXdziQ29XGLjQ==}
+    dependencies:
+      '@types/d3-time': 2.0.0
+    dev: false
+
+  /@types/d3-shape/2.0.0:
+    resolution: {integrity: sha512-NLzD02m5PiD1KLEDjLN+MtqEcFYn4ZL9+Rqc9ZwARK1cpKZXd91zBETbe6wpBB6Ia0D0VZbpmbW3+BsGPGnCpA==}
+    dependencies:
+      '@types/d3-path': 1.0.9
+    dev: false
+
+  /@types/d3-time/2.0.0:
+    resolution: {integrity: sha512-Abz8bTzy8UWDeYs9pCa3D37i29EWDjNTjemdk0ei1ApYVNqulYlGUKip/jLOpogkPSsPz/GvZCYiC7MFlEk0iQ==}
+    dev: false
 
   /@types/debug/4.1.5:
     resolution: {integrity: sha512-Q1y515GcOdTHgagaVFhHnIFQ38ygs/kmxdNpvpou+raI9UO3YZcHDngBSYKQklcKlvA7iuQlmIKbzvmxcOE9CQ==}
@@ -6405,6 +6435,58 @@ packages:
       type: 1.2.0
     dev: true
 
+  /d3-array/2.12.1:
+    resolution: {integrity: sha512-B0ErZK/66mHtEsR1TkPEEkwdy+WDesimkM5gpZr5Dsg54BiTA5RXtYW5qTLIAcekaS9xfZrzBLF/OAkB3Qn1YQ==}
+    dependencies:
+      internmap: 1.0.1
+    dev: false
+
+  /d3-color/2.0.0:
+    resolution: {integrity: sha512-SPXi0TSKPD4g9tw0NMZFnR95XVgUZiBH+uUTqQuDu1OsE2zomHU7ho0FISciaPvosimixwHFl3WHLGabv6dDgQ==}
+    dev: false
+
+  /d3-format/2.0.0:
+    resolution: {integrity: sha512-Ab3S6XuE/Q+flY96HXT0jOXcM4EAClYFnRGY5zsjRGNy6qCYrQsMffs7cV5Q9xejb35zxW5hf/guKw34kvIKsA==}
+    dev: false
+
+  /d3-interpolate/2.0.1:
+    resolution: {integrity: sha512-c5UhwwTs/yybcmTpAVqwSFl6vrQ8JZJoT5F7xNFK9pymv5C0Ymcc9/LIJHtYIggg/yS9YHw8i8O8tgb9pupjeQ==}
+    dependencies:
+      d3-color: 2.0.0
+    dev: false
+
+  /d3-path/2.0.0:
+    resolution: {integrity: sha512-ZwZQxKhBnv9yHaiWd6ZU4x5BtCQ7pXszEV9CU6kRgwIQVQGLMv1oiL4M+MK/n79sYzsj+gcgpPQSctJUsLN7fA==}
+    dev: false
+
+  /d3-scale/3.3.0:
+    resolution: {integrity: sha512-1JGp44NQCt5d1g+Yy+GeOnZP7xHo0ii8zsQp6PGzd+C1/dl0KGsp9A7Mxwp+1D1o4unbTTxVdU/ZOIEBoeZPbQ==}
+    dependencies:
+      d3-array: 2.12.1
+      d3-format: 2.0.0
+      d3-interpolate: 2.0.1
+      d3-time: 2.1.1
+      d3-time-format: 3.0.0
+    dev: false
+
+  /d3-shape/2.1.0:
+    resolution: {integrity: sha512-PnjUqfM2PpskbSLTJvAzp2Wv4CZsnAgTfcVRTwW03QR3MkXF8Uo7B1y/lWkAsmbKwuecto++4NlsYcvYpXpTHA==}
+    dependencies:
+      d3-path: 2.0.0
+    dev: false
+
+  /d3-time-format/3.0.0:
+    resolution: {integrity: sha512-UXJh6EKsHBTjopVqZBhFysQcoXSv/5yLONZvkQ5Kk3qbwiUYkdX17Xa1PT6U1ZWXGGfB1ey5L8dKMlFq2DO0Ag==}
+    dependencies:
+      d3-time: 2.1.1
+    dev: false
+
+  /d3-time/2.1.1:
+    resolution: {integrity: sha512-/eIQe/eR4kCQwq7yxi7z4c6qEXf2IYGcjoWB5OOQy4Tq9Uv39/947qlDcN2TLkiTzQWzvnsuYPB9TrWaNfipKQ==}
+    dependencies:
+      d3-array: 2.12.1
+    dev: false
+
   /d3/3.5.17:
     resolution: {integrity: sha1-vEZ0gAQ3iyGjYMn8fPUjF5B2L7g=}
 
@@ -9767,6 +9849,10 @@ packages:
       has: 1.0.3
       side-channel: 1.0.4
     dev: true
+
+  /internmap/1.0.1:
+    resolution: {integrity: sha512-lDB5YccMydFBtasVtxnZ3MRBHuaoE8GKsppq+EchKL2U4nK/DmEpPHNH8MZe5HkMtpSiTSOZwfN0tzYjO/lJEw==}
+    dev: false
 
   /interpret/1.2.0:
     resolution: {integrity: sha512-mT34yGKMNceBQUoVn7iCDKDntA7SC6gycMAWzGx1z/CMCTV7b2AAtXlo3nRyHZ1FelRkQbQjprHSYGwzLtkVbw==}
