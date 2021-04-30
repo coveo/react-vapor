@@ -6,9 +6,7 @@ import * as ReactDOMServer from 'react-dom/server';
 import {PrismLight as SyntaxHighlighter} from 'react-syntax-highlighter';
 import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
 import {prism as theme} from 'react-syntax-highlighter/dist/esm/styles/prism';
-
-// eslint-disable-next-line
-const prettierConfig = require('tsjs/prettier-config');
+import prettierConfig from 'tsjs/prettier-config';
 
 SyntaxHighlighter.registerLanguage('tsx', tsx);
 

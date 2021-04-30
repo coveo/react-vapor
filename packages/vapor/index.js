@@ -18,4 +18,4 @@ export const svgFromName = (svgName, svgClass, spanClass, title) => {
 
 export const svg = svgEnum;
 
-export const version = WEBPACK_DEFINED_VERSION;
+export const version = '0';

@@ -13,6 +13,7 @@
     "author": "Coveo",
     "license": "Apache-2.0",
     "main": "dist/js/VaporSVG.js",
+    "module": "index.js",
     "types": "index.d.ts",
     "scripts": {
         "build": "gulp clean && gulp && webpack",

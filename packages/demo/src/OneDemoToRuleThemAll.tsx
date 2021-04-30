@@ -1,13 +1,14 @@
-import '@demo-styling/main.scss';
+import './demo-styling/main.scss';
 
-import loadable from '@loadable/component';
 import * as React from 'react';
 import {HashRouter as Router, Redirect, Route} from 'react-router-dom';
-import {Loading, TabNavigation} from 'react-vapor';
+import {TabNavigation} from 'react-vapor';
 
 import logo from '../resources/vapor_logo.svg';
+import Components from './components';
 import ScrollToTop from './demo-building-blocs/ScrollTop';
 import TopNavLink from './demo-building-blocs/TopNavLink';
+import Styles from './styles';
 
 /* And to Vapor bind them */
 const TopNav = () => (
@@ -24,17 +25,13 @@ const Header = () => (
     </div>
 );
 
-const fallback = {fallback: <Loading fullContent />};
-const LoadableComponents = loadable(() => import(/* webpackChunkName: "components" */ './components'), fallback);
-const LoadableStyles = loadable(() => import(/* webpackChunkName: "styles" */ './styles'), fallback);
-
 const Demo = () => (
     <Router>
         <ScrollToTop />
         <Header />
         <div className="flex flex-auto pb4" style={{height: 'calc(100vh - 90px)'}}>
-            <Route path="/components" component={LoadableComponents} />
-            <Route path="/styles" component={LoadableStyles} />
+            <Route path="/components" component={Components} />
+            <Route path="/styles" component={Styles} />
             <Route exact path="/" component={() => <Redirect to="/components" />} />
         </div>
     </Router>

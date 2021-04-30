@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {NormalComponents, SpecialComponents} from 'react-markdown/src/ast-to-react';
 
 const heading = ({level, children}: any) => React.createElement(`h${level}`, {className: `h${level}`}, children);
 
@@ -9,10 +10,15 @@ const list = ({ordered, children}: any) =>
         ? React.createElement('ol', {className: 'list-decimal'}, children)
         : React.createElement('ul', {className: 'list-disc'}, children);
 
-// See https://github.com/rexxars/react-markdown#node-types for possible node types
-// See https://github.com/rexxars/react-markdown/blob/master/src/renderers.js as an exmaple
-export const MarkdownOverrides: Record<string, React.ReactType> = {
-    heading,
+// See https://github.com/remarkjs/react-markdown#appendix-b-components for possible node types
+export const MarkdownOverrides: Partial<NormalComponents & SpecialComponents> = {
+    h1: heading,
+    h2: heading,
+    h3: heading,
+    h4: heading,
+    h5: heading,
+    h6: heading,
     table,
-    list,
+    ol: list,
+    ul: list,
 };

@@ -7,16 +7,18 @@
         "downlevelIteration": true,
         "esModuleInterop": true,
         "importHelpers": true,
+        "isolatedModules": true,
         "composite": true,
         "rootDir": "src",
         "outDir": "built",
         "baseUrl": ".",
         "tsBuildInfoFile": "./built/.tsbuildinfo",
         "paths": {
-            "react-vapor": ["../react-vapor/src/Entry.ts"],
-            "@demo-styling/*": ["./src/demo-styling/*"]
+            "react-vapor": ["../react-vapor/src/Entry.ts"]
         },
-        "lib": ["ES2020", "dom"],
+        "target": "ESNext",
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "types": ["vite/client"],
         "typeRoots": ["./types", "./node_modules/@types"]
     },
     "include": ["src"],

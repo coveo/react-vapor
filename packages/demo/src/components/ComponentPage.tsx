@@ -1,80 +1,79 @@
 import * as React from 'react';
-import Markdown from 'react-markdown';
-import {BasicHeader, ITabProps, Loading, TabContent, TabPaneConnected} from 'react-vapor';
+import {BasicHeader, CherryPick, ITabProps, Loading, TabContent, TabPaneConnected} from 'react-vapor';
 
 import Code from '../demo-building-blocs/Code';
-import {MarkdownOverrides} from '../demo-building-blocs/MarkdownOverrides';
-import {IComponent, TabConfig} from './ComponentsInterface';
+import Example from '../demo-building-blocs/Example';
+import LoadableMarkdown from '../demo-building-blocs/LoadableMarkdown';
 
-type ComponentPageProps = IComponent & {tabs?: TabConfig[]};
+interface MarkdownTab {
+    id: string;
+    tabName: string;
+    order: number;
+    loadMarkdown: () => Promise<{default: string}>;
+}
 
-const buildTabIdTemplate = (componentName: string) => (tabName: string) => `${componentName}-${tabName}-tab`;
+const markdownFiles = import.meta.glob('./examples/*.md') as Record<string, () => Promise<{default: string}>>;
 
-const ComponentPage: React.FunctionComponent<ComponentPageProps> = (props) => {
-    const componentRootPath = props.path.substring(0, props.path.lastIndexOf('.'));
-    const [tabs, setTabs] = React.useState(null);
-    React.useEffect(() => {
-        const load = async (path: string, ctx: any) => {
-            if (path.includes(componentRootPath)) {
+const ComponentPage: React.FunctionComponent<Pick<Example, 'route' | 'firstTabLabel' | 'title' | 'sourceCode'>> = (
+    props
+) => {
+    const markdownTabs = Object.keys(markdownFiles)
+        .filter((path) => path.includes(props.route))
+        .map(
+            (path): MarkdownTab => {
                 const [, order, tabName] = /\w+Examples?(?:\.(\d+))?(?:\.(\w+))?\.md$/.exec(path);
-                const {default: markdown} = await ctx(path);
-                const c: TabConfig = {
+                return {
+                    id: `${props.route}-${tabName}-tab`,
                     tabName,
-                    markdown,
                     order: parseInt(order, 10) || 0,
+                    loadMarkdown: markdownFiles[path],
                 };
-                return c;
             }
-        };
-        const loadAll = () => {
-            const mdFiles = require.context('!!raw-loader!./examples', true, /Examples?(\.\d+)?(\.\w+)?\.md$/i, 'lazy');
-            return Promise.all(mdFiles.keys().map((path) => load(path, mdFiles)));
-        };
-        loadAll().then((all) => setTabs(all.filter(Boolean)));
-    }, [componentRootPath]);
-    const {name, component} = props;
-    const hasMarkdownTabs = tabs && tabs.length > 0;
-    const getTabId = buildTabIdTemplate(name);
-    const mapTabConfigToProps = ({tabName}: TabConfig): ITabProps => ({
-        id: getTabId(tabName),
-        title: tabName,
-    });
+        )
+        .sort((tabA: MarkdownTab, tabB: MarkdownTab) => tabA.order - tabB.order);
+    const hasMarkdownTabs = markdownTabs && markdownTabs.length > 0;
 
-    const tabProps: ITabProps[] =
-        hasMarkdownTabs &&
-        [{id: getTabId('development'), title: component.firstTabLabel || 'Develop'}].concat(
-            tabs.sort((tabA: TabConfig, tabB: TabConfig) => tabA.order - tabB.order).map(mapTabConfigToProps)
-        );
     const PageLayout = hasMarkdownTabs ? PageLayoutWithTabs : PageLayoutWithoutTabs;
 
-    return tabs === null ? (
+    return markdownTabs === null ? (
         <Loading fullContent />
     ) : (
         <>
-            <BasicHeader title={{text: component.title || name}} description={component.description} tabs={tabProps} />
-            <PageLayout {...props} tabs={tabs} />
+            <BasicHeader
+                title={{text: props.title}}
+                tabs={
+                    hasMarkdownTabs &&
+                    [{id: `${props.route}-development-tab`, title: props.firstTabLabel} as ITabProps].concat(
+                        markdownTabs.map(
+                            ({tabName, id}: MarkdownTab): ITabProps => ({
+                                id,
+                                title: tabName,
+                            })
+                        )
+                    )
+                }
+            />
+            <PageLayout {...props} tabs={markdownTabs} />
         </>
     );
 };
 
-const PageLayoutWithTabs: React.FunctionComponent<ComponentPageProps & {tabs: TabConfig[]}> = (props) => {
-    const {name, tabs} = props;
-    const getTabId = buildTabIdTemplate(name);
-    return (
-        <TabContent className="mod-header-padding mod-form-top-bottom-padding">
-            <TabPaneConnected id={getTabId('development')}>
-                <DevelopmentTabContent {...props} />
+const PageLayoutWithTabs: React.FunctionComponent<Pick<Example, 'sourceCode' | 'route'> & {tabs: MarkdownTab[]}> = (
+    props
+) => (
+    <TabContent className="mod-header-padding mod-form-top-bottom-padding">
+        <TabPaneConnected id={`${props.route}-development-tab`}>
+            <DevelopmentTabContent {...props} />
+        </TabPaneConnected>
+        {props.tabs.map(({loadMarkdown, id}: MarkdownTab) => (
+            <TabPaneConnected key={id} id={id}>
+                <LoadableMarkdown load={loadMarkdown} />
             </TabPaneConnected>
-            {tabs.map(({tabName, markdown}: TabConfig) => (
-                <TabPaneConnected key={getTabId(tabName)} id={getTabId(tabName)}>
-                    <Markdown className="markdown-documentation" source={markdown} renderers={MarkdownOverrides} />
-                </TabPaneConnected>
-            ))}
-        </TabContent>
-    );
-};
+        ))}
+    </TabContent>
+);
 
-const PageLayoutWithoutTabs: React.FunctionComponent<ComponentPageProps> = (props) => (
+const PageLayoutWithoutTabs: React.FunctionComponent<CherryPick<Example, 'sourceCode'>> = (props) => (
     <div className="mod-header-padding mod-form-top-bottom-padding">
         <DevelopmentTabContent {...props} />
     </div>
@@ -99,29 +98,15 @@ const chopDownSourceFile = (wholeFile: string): string => {
     }
 };
 
-const DevelopmentTabContent: React.FunctionComponent<ComponentPageProps> = ({component, path}) => {
-    const [code, setCode] = React.useState('');
-    React.useEffect(() => {
-        const doImport = async () => {
-            const res: {default: string} = await import(
-                // path has format './ComponentName.js'
-                // source file is at '@examples/ComponentName.tsx'
-                '!!raw-loader!@examples/' + path.replace('./', '').replace('.js', '.tsx')
-            );
-            return chopDownSourceFile(res.default);
-        };
-        doImport().then(setCode);
-    }, [path]);
-    return (
-        <>
-            {React.createElement(component)}
-            {code && (
-                <div className="mt2">
-                    <Code language="tsx">{code}</Code>
-                </div>
-            )}
-        </>
-    );
-};
+const DevelopmentTabContent: React.FunctionComponent<Pick<Example, 'sourceCode'>> = ({children, sourceCode}) => (
+    <>
+        {children}
+        {sourceCode && (
+            <div className="mt2">
+                <Code language="tsx">{chopDownSourceFile(sourceCode)}</Code>
+            </div>
+        )}
+    </>
+);
 
 export default ComponentPage;

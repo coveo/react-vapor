@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React from 'react';
+import * as React from 'react';
 import {IDatePickerState} from '../datePicker';
 import {Calendar} from './Calendar';
 

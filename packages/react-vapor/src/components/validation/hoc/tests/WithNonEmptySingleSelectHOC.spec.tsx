@@ -1,6 +1,6 @@
 import {ShallowWrapper} from 'enzyme';
 import {mountWithStore, shallowWithStore} from 'enzyme-redux';
-import React from 'react';
+import * as React from 'react';
 import {act} from 'react-dom/test-utils';
 import {composeMockStore, getStoreMock, withSelectedValues} from '../../../../utils/tests/TestUtils';
 import {ISingleSelectOwnProps, SingleSelectConnected} from '../../../select/SingleSelectConnected';
