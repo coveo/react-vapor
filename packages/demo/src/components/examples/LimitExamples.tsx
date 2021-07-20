@@ -19,7 +19,13 @@ export const LimitExamples: React.FunctionComponent = () => (
         <div className="form-group">
             <label className="form-control-label">A limit with a history icon included</label>
             <div className="form-control">
-                <Limit id="2" title={title} usage={usageNearLimit} isHistoryIncluded />
+                <Limit
+                    id="2"
+                    title={title}
+                    usage={usageNearLimit}
+                    isHistoryIncluded
+                    onClick={() => alert('I am an action!')}
+                />
             </div>
         </div>
         <div className="form-group">
